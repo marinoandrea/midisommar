@@ -59,6 +59,33 @@ def load_midi_dir(directory: str | Path) -> list[list[Note]]:
     return [load_midi_file(p) for p in paths]
 
 
+def save_notes_midi(notes: list[Note], path: str | Path, ticks_per_beat: int = 480) -> None:
+    """Write a multi-channel ``Note`` list to a single-track ``.mid`` (channels preserved)."""
+    mid = mido.MidiFile(ticks_per_beat=ticks_per_beat)
+    track = mido.MidiTrack()
+    mid.tracks.append(track)
+    events: list[tuple[int, int, Note, bool]] = []
+    for note in notes:
+        on = int(round(note.start * ticks_per_beat))
+        off = on + max(1, int(round(note.duration * ticks_per_beat)))
+        events.append((on, 1, note, True))
+        events.append((off, 0, note, False))
+    events.sort(key=lambda e: (e[0], e[1]))  # note_off before note_on at the same tick
+    last = 0
+    for tick, _, note, is_on in events:
+        track.append(
+            mido.Message(
+                "note_on" if is_on else "note_off",
+                note=max(0, min(127, note.pitch)),
+                velocity=note.velocity if is_on else 0,
+                channel=max(0, min(15, note.channel)),
+                time=tick - last,
+            )
+        )
+        last = tick
+    mid.save(str(path))
+
+
 # -- Ableton capture --------------------------------------------------------------------------
 
 def capture_from_ableton(
