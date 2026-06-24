@@ -9,3 +9,11 @@ __pycache__/
 
 # OS
 .DS_Store
+
+# Model checkpoints
+*.pt
+models/
+
+# Data (keep the folder, ignore its contents)
+/data/*
+!/data/.gitkeep

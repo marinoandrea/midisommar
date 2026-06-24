@@ -145,6 +145,42 @@ class AbletonOSC:
         """Start playback of the clip at ``track``/``slot``."""
         self.send("/live/clip_slot/fire", track, slot)
 
+    def has_clip(self, track: int, slot: int) -> bool:
+        """Whether a clip exists in ``track``'s ``slot`` (reply echoes track, slot, flag)."""
+        reply = self.query("/live/clip_slot/get/has_clip", track, slot)
+        return bool(reply[-1])
+
+    def get_clip_notes(self, track: int, slot: int) -> list[Note]:
+        """Read the notes of the clip at ``track``/``slot``.
+
+        AbletonOSC echoes the track/slot, then a flat run of ``pitch, start, duration, velocity,
+        mute`` per note. This is the read counterpart to :meth:`add_notes` — the path by which the
+        musician's recorded phrases come *in* for training data and live context.
+        """
+        reply = self.query("/live/clip/get/notes", track, slot)
+        flat = reply[2:]  # drop the echoed track, slot
+        notes: list[Note] = []
+        for i in range(0, len(flat) - 4, 5):
+            pitch, start, duration, velocity, mute = flat[i : i + 5]
+            notes.append(
+                Note(
+                    pitch=int(pitch),
+                    start=float(start),
+                    duration=float(duration),
+                    velocity=int(velocity),
+                    mute=bool(mute),
+                )
+            )
+        return notes
+
+    def create_midi_track(self, index: int = -1) -> None:
+        """Create a new MIDI track at ``index`` (-1 appends at the end)."""
+        self.send("/live/song/create_midi_track", index)
+
+    def delete_track(self, index: int) -> None:
+        """Delete the track at ``index``."""
+        self.send("/live/song/delete_track", index)
+
     # -- lifecycle ----------------------------------------------------------------
 
     def close(self) -> None:

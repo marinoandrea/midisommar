@@ -8,12 +8,27 @@ authors = [
 ]
 requires-python = ">=3.10"
 dependencies = [
+    "mido>=1.3.3",
+    "numpy>=2.2.6",
     "python-osc>=1.10.2",
+    "python-rtmidi>=1.5.8",
+    "torch>=2.12.1",
 ]
 
 [project.scripts]
 osc-genai = "osc_genai:main"
+osc-genai-live = "osc_genai.live:main"
+osc-genai-generate = "osc_genai.generation:main"
+osc-genai-train = "osc_genai.train:main"
+osc-genai-play = "osc_genai.play:main"
+osc-genai-duet = "osc_genai.duet:main"
+osc-genai-fake-human = "osc_genai.fake_human:main"
 
 [build-system]
 requires = ["uv_build>=0.8.15,<0.9.0"]
 build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]
