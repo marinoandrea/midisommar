@@ -15,14 +15,23 @@ dependencies = [
     "torch>=2.12.1",
 ]
 
+[project.optional-dependencies]
+# Ableton Link sync for the realtime commands (--link). Kept optional so the base install
+# and tests don't pull in the native aalink build. Install with: uv sync --extra link
+link = ["aalink>=0.2.2"]
+
 [project.scripts]
 osc-genai = "osc_genai:main"
-osc-genai-live = "osc_genai.live:main"
-osc-genai-generate = "osc_genai.generation:main"
-osc-genai-train = "osc_genai.train:main"
-osc-genai-play = "osc_genai.play:main"
-osc-genai-duet = "osc_genai.duet:main"
-osc-genai-fake-human = "osc_genai.fake_human:main"
+osc-genai-live = "osc_genai.realtime.live:main"
+osc-genai-generate = "osc_genai.inference:main"
+osc-genai-train = "osc_genai.training.train:main"
+osc-genai-train-conditional = "osc_genai.training.train:conditional_main"
+osc-genai-train-paired = "osc_genai.training.train:paired_main"
+osc-genai-build-pairs = "osc_genai.data.pairs:main"
+osc-genai-play = "osc_genai.realtime.play:main"
+osc-genai-duet = "osc_genai.realtime.duet:main"
+osc-genai-fake-human = "osc_genai.realtime.fake_human:main"
+osc-genai-record = "osc_genai.data.record:main"
 
 [build-system]
 requires = ["uv_build>=0.8.15,<0.9.0"]
