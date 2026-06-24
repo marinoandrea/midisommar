@@ -11,12 +11,12 @@ from __future__ import annotations
 
 import argparse
 
-from .ableton import AbletonOSC
-from .generate import Note, total_beats
-from .model import FactoredEventModel
-from .repr import DEFAULT_STEPS_PER_BEAT, events_to_notes, notes_to_events
-from .train import load_model
-from .vocab import EventCodec
+from osc_genai.osc.ableton import AbletonOSC
+from osc_genai.core.note import Note, total_beats
+from osc_genai.model.factored import FactoredEventModel
+from osc_genai.core.event import DEFAULT_STEPS_PER_BEAT, events_to_notes, notes_to_events
+from osc_genai.model.checkpoint import load_model
+from osc_genai.core.vocab import EventCodec
 
 
 def generate_phrase(
@@ -27,6 +27,7 @@ def generate_phrase(
     steps_per_beat: int = DEFAULT_STEPS_PER_BEAT,
     max_events: int = 64,
     temperature: float = 1.0,
+    pitch_bias: dict[int, float] | None = None,
 ) -> list[Note]:
     """Sample a phrase as clip ``Note``s, optionally primed on a ``context`` phrase."""
     codec = codec or EventCodec(model.vocab)
@@ -35,7 +36,7 @@ def generate_phrase(
         context_events = notes_to_events(context, steps_per_beat=steps_per_beat)
         context_fields = codec.encode_sequence(context_events, add_eos=False)
     generated = model.generate(
-        context=context_fields, max_events=max_events, temperature=temperature
+        context=context_fields, max_events=max_events, temperature=temperature, pitch_bias=pitch_bias
     )
     events = codec.decode_sequence(generated)
     return events_to_notes(events, steps_per_beat=steps_per_beat)

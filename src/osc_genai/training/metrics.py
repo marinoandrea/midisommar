@@ -19,8 +19,8 @@ from typing import Iterable, Sequence
 
 import torch
 
-from .train import collate
-from .vocab import EventCodec
+from osc_genai.training.train import collate
+from osc_genai.core.vocab import EventCodec
 
 
 def dataset_loss(model, event_sequences, codec: EventCodec | None = None, batch_size: int = 32,

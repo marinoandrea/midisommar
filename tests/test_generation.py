@@ -4,12 +4,12 @@ from __future__ import annotations
 
 import torch
 
-from osc_genai.generate import Note
-from osc_genai.generation import generate_phrase
-from osc_genai.model import FactoredEventModel, ModelConfig
-from osc_genai.repr import notes_to_events
-from osc_genai.train import TrainConfig, train
-from osc_genai.vocab import VocabConfig
+from osc_genai.core.note import Note
+from osc_genai.inference import generate_phrase
+from osc_genai.model.factored import FactoredEventModel, ModelConfig
+from osc_genai.core.event import notes_to_events
+from osc_genai.training.train import TrainConfig, train
+from osc_genai.core.vocab import VocabConfig
 
 # velocity 100 is a 16-bin centre; with steps_per_beat=4 the onsets/durations are on-grid.
 NOTES = [Note(60, 0.0, 0.5, 100), Note(62, 0.5, 0.5, 100), Note(64, 1.0, 0.5, 100)]
