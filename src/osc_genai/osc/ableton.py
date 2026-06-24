@@ -17,7 +17,7 @@ from pythonosc.dispatcher import Dispatcher
 from pythonosc.osc_server import ThreadingOSCUDPServer
 from pythonosc.udp_client import SimpleUDPClient
 
-from .generate import Note
+from osc_genai.core.note import Note
 
 # AbletonOSC's default wiring. It receives commands on SEND_PORT and replies on RECV_PORT.
 DEFAULT_HOST = "127.0.0.1"

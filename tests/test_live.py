@@ -12,7 +12,7 @@ import time
 import mido
 import pytest
 
-from osc_genai.live import DuetEngine, IntervalHarmonizer, NoteEvent
+from osc_genai.realtime.live import DuetEngine, IntervalHarmonizer, NoteEvent
 
 
 # -- pure event conversion --------------------------------------------------------------------

@@ -42,7 +42,7 @@ class NoteEvent:
     """A real-time note-on/off — the live counterpart to a clip ``Note``.
 
     ``on`` distinguishes note-on from note-off; ``pitch`` and ``velocity`` are 0-127. Unlike a clip
-    :class:`~osc_genai.generate.Note` there is no start/duration: the timing of a live event *is*
+    :class:`~osc_genai.core.note.Note` there is no start/duration: the timing of a live event *is*
     when it happens, carried by the transport rather than the value.
     """
 

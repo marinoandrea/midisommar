@@ -12,8 +12,8 @@ import subprocess
 import sys
 from pathlib import Path
 
-from osc_genai.ableton import AbletonOSC
-from osc_genai.generate import Note, generate_notes, total_beats
+from osc_genai.osc.ableton import AbletonOSC
+from osc_genai.core.note import Note, generate_notes, total_beats
 
 MOCK = Path(__file__).resolve().parent.parent / "scripts" / "mock_ableton.py"
 RECV_PORT = 11900
@@ -70,7 +70,7 @@ def test_mock_read_path():
 
 
 def test_capture_from_ableton_scans_tracks_and_slots():
-    from osc_genai.data import capture_from_ableton
+    from osc_genai.data.midi import capture_from_ableton
 
     with running_mock() as live:  # mock reports 3 tracks, every slot has the same clip
         sequences = capture_from_ableton(live, slots=2)

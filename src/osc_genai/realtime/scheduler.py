@@ -23,6 +23,7 @@ class Scheduled:
     pitch: int
     velocity: int
     dur: float
+    channel: int = 0
 
 
 class AnticipatoryBuffer:
@@ -46,6 +47,15 @@ class AnticipatoryBuffer:
     def add(self, notes: list[Scheduled]) -> None:
         self._notes.extend(notes)
         self._notes.sort(key=lambda s: s.onset)
+
+    def upcoming(self) -> list[Scheduled]:
+        """The currently-scheduled (not-yet-fired) notes — re-fed as history so generation continues
+        from the buffer frontier rather than regenerating the same window."""
+        return list(self._notes)
+
+    def clear(self) -> None:
+        """Drop every buffered note (e.g. when the transport stops and the plan is abandoned)."""
+        self._notes.clear()
 
     def pop_due(self, now: float) -> list[Scheduled]:
         """Remove and return notes whose onset has arrived (``onset <= now``)."""
