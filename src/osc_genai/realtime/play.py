@@ -125,9 +125,12 @@ def main() -> None:
     parser.add_argument(
         "--no-virtual", action="store_true", help="connect to an existing port by name"
     )
+    parser.add_argument(
+        "--device", default="cpu", help="cpu | cuda | mps | auto (realtime defaults to cpu)"
+    )
     args = parser.parse_args()
 
-    model = load_model(args.checkpoint)
+    model = load_model(args.checkpoint, device=args.device)
     clock = make_clock(args.link, bpm=args.bpm, quantum=args.quantum, start_stop_sync=args.start_stop_sync)
     tempo = "Ableton Link" if args.link else f"{args.bpm} BPM"
     with mido.open_output(args.out_port, virtual=not args.no_virtual) as out:

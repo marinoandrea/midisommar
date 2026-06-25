@@ -54,9 +54,10 @@ def main() -> None:
     parser.add_argument("--temperature", type=float, default=1.0)
     parser.add_argument("--max-events", type=int, default=64)
     parser.add_argument("--steps-per-beat", type=int, default=DEFAULT_STEPS_PER_BEAT)
+    parser.add_argument("--device", default="auto", help="cpu | cuda | mps | auto")
     args = parser.parse_args()
 
-    model = load_model(args.checkpoint)
+    model = load_model(args.checkpoint, device=args.device)
     with AbletonOSC() as live:
         context = None
         if args.context_track is not None and live.has_clip(args.context_track, args.context_slot):

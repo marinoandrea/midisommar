@@ -9,6 +9,7 @@ from pathlib import Path
 import torch
 from torch import nn
 
+from osc_genai.core.device import resolve_device
 from osc_genai.data.midi import augment, cross_pairs, load_midi_dir
 from osc_genai.model.factored import FactoredEventModel, ModelConfig
 from osc_genai.model.checkpoint import load_model, save_model  # re-exported for callers/tests
@@ -33,7 +34,7 @@ def collate(sequences: list[list[Fields]], eos: Fields) -> tuple[torch.Tensor, t
 
 
 def pitch_class_weights(
-    encoded: list[list[Fields]], pitch_vocab: int, device: str = "cpu"
+    encoded: list[list[Fields]], pitch_vocab: int, device: str | torch.device = "cpu"
 ) -> torch.Tensor:
     """Balanced per-pitch class weights (rare classes up-weighted) from encoded sequences.
 
@@ -56,7 +57,7 @@ class TrainConfig:
     batch_size: int = 32
     lr: float = 1e-3
     grad_clip: float = 1.0
-    device: str = "cpu"
+    device: str = "auto"
     balance_pitch: bool = False
 
 
@@ -70,7 +71,7 @@ def train(
     """Teacher-forced next-event training; returns the per-epoch mean loss history."""
     codec = codec or EventCodec(model.vocab)
     config = config or TrainConfig()
-    device = torch.device(config.device)
+    device = resolve_device(config.device)
     model.to(device)
     model.train()
 
@@ -78,7 +79,7 @@ def train(
     if not encoded:
         raise ValueError("no (non-empty) training sequences")
     pitch_weights = (
-        pitch_class_weights(encoded, model.vocab.pitch_vocab, config.device)
+        pitch_class_weights(encoded, model.vocab.pitch_vocab, device)
         if config.balance_pitch
         else None
     )
@@ -133,7 +134,7 @@ def train_conditional(
     """
     codec = codec or EventCodec(model.vocab)
     config = config or TrainConfig()
-    device = torch.device(config.device)
+    device = resolve_device(config.device)
     model.to(device)
     model.train()
 
@@ -152,7 +153,7 @@ def train_conditional(
         pitch_class_weights(
             [[fields for fields, is_target in zip(tgt, reg) if is_target] for tgt, reg in encoded],
             model.vocab.pitch_vocab,
-            config.device,
+            device,
         )
         if config.balance_pitch
         else None
@@ -192,7 +193,7 @@ def main() -> None:
     parser.add_argument("--steps-per-beat", type=int, default=DEFAULT_STEPS_PER_BEAT)
     parser.add_argument("--hidden", type=int, default=256)
     parser.add_argument("--layers", type=int, default=1)
-    parser.add_argument("--device", default="cpu")
+    parser.add_argument("--device", default="auto", help="cpu | cuda | mps | auto")
     parser.add_argument("--balance-pitch", action="store_true", help="up-weight rare pitches in loss")
     args = parser.parse_args()
 
@@ -231,7 +232,7 @@ def conditional_main() -> None:
     parser.add_argument("--hidden", type=int, default=256)
     parser.add_argument("--layers", type=int, default=1)
     parser.add_argument("--steps-per-beat", type=int, default=DEFAULT_STEPS_PER_BEAT)
-    parser.add_argument("--device", default="cpu")
+    parser.add_argument("--device", default="auto", help="cpu | cuda | mps | auto")
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--balance-pitch", action="store_true", help="up-weight rare pitches (kick/snare) in loss")
     parser.add_argument("--target-drums", action="store_true", help="targets are drums: keep full kits, normalize to GM")
@@ -297,7 +298,7 @@ def paired_main() -> None:
     parser.add_argument("--hidden", type=int, default=256)
     parser.add_argument("--layers", type=int, default=1)
     parser.add_argument("--steps-per-beat", type=int, default=DEFAULT_STEPS_PER_BEAT)
-    parser.add_argument("--device", default="cpu")
+    parser.add_argument("--device", default="auto", help="cpu | cuda | mps | auto")
     parser.add_argument("--balance-pitch", action="store_true", help="up-weight rare pitches (kick/snare)")
     parser.add_argument(
         "--interleaved", action=argparse.BooleanOptionalAction, default=True,

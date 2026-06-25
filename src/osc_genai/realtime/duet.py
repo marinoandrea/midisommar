@@ -108,7 +108,7 @@ def duet(
     regular = set(regular_pitches)
     bias = None
     if pitch_bias:
-        tensor = torch.zeros(model.vocab.pitch_vocab)
+        tensor = torch.zeros(model.vocab.pitch_vocab, device=model.start.device)
         for pitch, value in pitch_bias.items():
             tensor[pitch] += value
         bias = {0: tensor}
@@ -364,6 +364,9 @@ def main() -> None:
     parser.add_argument("--regular-temperature", type=float, default=0.15, help="near-greedy timing temp for the foundation")
     parser.add_argument("--snap-steps", type=int, default=2, help="snap foundation onsets to this grid (2=8th, 4=1/4, 0=off)")
     parser.add_argument("--seconds", type=float, default=None, help="stop after N seconds")
+    parser.add_argument(
+        "--device", default="cpu", help="cpu | cuda | mps | auto (realtime defaults to cpu)"
+    )
     parser.add_argument("--snapshot-dir", default="data/MIDI", help="dataset root snapshots are saved into")
     parser.add_argument("--no-snapshots", action="store_true", help="disable the keypress snapshot trigger")
     parser.add_argument("--snapshot-bars", type=int, default=4, help="bars per snapshot (match the training chunk size)")
@@ -375,7 +378,7 @@ def main() -> None:
     parser.add_argument("--snapshot-osc-addr", default="/snapshot", help="OSC address that triggers a snapshot")
     args = parser.parse_args()
 
-    model = load_model(args.checkpoint)
+    model = load_model(args.checkpoint, device=args.device)
     clock = make_clock(args.link, bpm=args.bpm, quantum=args.quantum, start_stop_sync=args.start_stop_sync)
     tempo = "Ableton Link" if args.link else f"{args.bpm} BPM"
     with contextlib.ExitStack() as stack:
