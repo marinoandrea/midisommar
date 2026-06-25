@@ -2,7 +2,7 @@
 
 :func:`generate_phrase` is the bridge from model field-indices back to clip ``Note``s: optionally
 primed on a *context* phrase (the musician's call read from a clip), it samples a response. The CLI
-(``osc-genai-generate``) loads a checkpoint, optionally reads a context clip out of Ableton, and
+(``generate``) loads a checkpoint, optionally reads a context clip out of Ableton, and
 writes the generated response into a clip — the offline / clip-based duet. The *real-time* model
 responder (turn-taking / simultaneous, with scheduling) lands in M3 alongside the scheduler.
 """

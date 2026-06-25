@@ -21,17 +21,17 @@ dependencies = [
 link = ["aalink>=0.2.2"]
 
 [project.scripts]
-osc-genai = "osc_genai:main"
-osc-genai-live = "osc_genai.realtime.live:main"
-osc-genai-generate = "osc_genai.inference:main"
-osc-genai-train = "osc_genai.training.train:main"
-osc-genai-train-conditional = "osc_genai.training.train:conditional_main"
-osc-genai-train-paired = "osc_genai.training.train:paired_main"
-osc-genai-build-pairs = "osc_genai.data.pairs:main"
-osc-genai-play = "osc_genai.realtime.play:main"
-osc-genai-duet = "osc_genai.realtime.duet:main"
-osc-genai-fake-human = "osc_genai.realtime.fake_human:main"
-osc-genai-record = "osc_genai.data.record:main"
+demo = "osc_genai:main"
+live = "osc_genai.realtime.live:main"
+generate = "osc_genai.inference:main"
+train = "osc_genai.training.train:main"
+train-conditional = "osc_genai.training.train:conditional_main"
+train-paired = "osc_genai.training.train:paired_main"
+build-pairs = "osc_genai.data.pairs:main"
+play = "osc_genai.realtime.play:main"
+duet = "osc_genai.realtime.duet:main"
+fake-human = "osc_genai.realtime.fake_human:main"
+record = "osc_genai.data.record:main"
 
 [build-system]
 requires = ["uv_build>=0.8.15,<0.9.0"]

@@ -4,8 +4,8 @@ No controller or Ableton input-routing needed — this plays a looping sequence 
 clips, a ``.mid`` file, or a built-in acid pattern) out to the port the duet listens on
 (``osc-genai in``), so you can hear/verify the duet respond. Two terminals::
 
-    uv run osc-genai-duet --checkpoint models/acid_v1.pt        # terminal 1 (creates the ports)
-    uv run osc-genai-fake-human --from-data data/MIDI           # terminal 2 (drives the input)
+    uv run duet --checkpoint models/acid_v1.pt        # terminal 1 (creates the ports)
+    uv run fake-human --from-data data/MIDI           # terminal 2 (drives the input)
 
 Then route ``osc-genai out`` to a synth in Ableton to hear the model's response.
 """
@@ -143,7 +143,7 @@ def main() -> None:
     if not args.virtual and args.to_port not in mido.get_output_names():
         raise SystemExit(
             f"Port {args.to_port!r} not found. Start the duet first "
-            "(uv run osc-genai-duet ...), or pass --virtual to create the port."
+            "(uv run duet ...), or pass --virtual to create the port."
         )
 
     clock = make_clock(args.link, bpm=args.bpm, quantum=args.quantum, start_stop_sync=args.start_stop_sync)

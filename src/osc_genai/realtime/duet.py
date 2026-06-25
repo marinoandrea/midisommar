@@ -3,7 +3,7 @@
 The human plays into a virtual MIDI input; their notes are folded — **time-aligned, on the shared
 clock** — into the model's interleaved event stream as ``PARTNER`` events, and the model generates
 its own ``SELF`` line ahead into a buffer and plays it out a virtual MIDI output. This is the duet
-the ``source``-field model (trained by ``osc-genai-train-paired``) was built for: unlike the older
+the ``source``-field model (trained by ``train-paired``) was built for: unlike the older
 pitch-only priming, the model conditions on *what the human plays and when*.
 
 How it stays live and adaptive:

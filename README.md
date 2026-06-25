@@ -15,9 +15,9 @@ directly.)
 
 | Stage | What works |
 |------|------------|
-| **M1 — rule-based** | `osc-genai-live`: a real-time harmonizer (no model). |
+| **M1 — rule-based** | `live`: a real-time harmonizer (no model). |
 | **M2 — solo model** | A factored per-event GRU trains on `.mid` and generates clips into Live. |
-| **M3 — real-time duet** | `osc-genai-duet`: anticipatory scheduling — generates a complementary line *ahead*, plays from a lookahead buffer, and **reconciles** when your recent notes change. Rides **Ableton Link** for shared tempo/grid/transport. |
+| **M3 — real-time duet** | `duet`: anticipatory scheduling — generates a complementary line *ahead*, plays from a lookahead buffer, and **reconciles** when your recent notes change. Rides **Ableton Link** for shared tempo/grid/transport. |
 | **M4 — paired data** | Capture genuine `(human, machine)` material live: session recording, and **snapshot save** (grab the last N bars straight into the dataset). The paired-training pipeline (`build-pairs` + `train-paired`) is in place; *training on captured pairs is not yet validated*. |
 
 The scheduling is already anticipatory; the shipped model is still **solo-trained**, so it
@@ -60,11 +60,11 @@ uv sync --extra link    # + Ableton Link support (native aalink build) for the d
 ## Quick start (plumbing demo)
 
 ```bash
-uv run osc-genai
+uv run demo
 ```
 
 Against a live set this prints the track count and track 0's name, then a new clip appears in
-slot 0 of track 0 with the generated notes. `osc-genai` is the minimal seam — a hardcoded
+slot 0 of track 0 with the generated notes. `demo` is the minimal seam — a hardcoded
 C-major scale via `core.note.generate_notes()`; swap in a model for real output (below).
 
 ### Verify without Ableton
@@ -73,7 +73,7 @@ A mock mimics AbletonOSC's ports so you can exercise the full send/receive path 
 
 ```bash
 uv run python scripts/mock_ableton.py   # terminal 1
-uv run osc-genai                         # terminal 2
+uv run demo                              # terminal 2
 ```
 
 The mock **refuses to start if a real AbletonOSC is answering on 11000** (so an open Live set
@@ -101,26 +101,26 @@ and a GRU predicts the next note one event at a time (O(1) per event, which the 
 **Solo** — train on a folder of `.mid` (recursive, with transposition augmentation):
 
 ```bash
-uv run osc-genai-train --data-dir data/MIDI --out models/acid_v1.pt --epochs 40 --transpose 5
+uv run train --data-dir data/MIDI --out models/acid_v1.pt --epochs 40 --transpose 5
 ```
 
 **Conditional / paired** — learn to respond in one role given another (e.g. bass → drums):
 
 ```bash
 # inspect how many aligned chunks the corpus yields
-uv run osc-genai-build-pairs --data-dir data/MIDI --context-inst Bass --target-inst Drums
+uv run build-pairs --data-dir data/MIDI --context-inst Bass --target-inst Drums
 
 # train directly off the same-song aligned pairs
-uv run osc-genai-train-paired --data-dir data/MIDI \
+uv run train-paired --data-dir data/MIDI \
   --context-inst Bass --target-inst Drums --chunk-bars 4 --out models/bass2drums.pt
 ```
 
 **Generate** a phrase into a Live clip (optionally primed on a context clip to "respond"):
 
 ```bash
-uv run osc-genai-generate --checkpoint models/acid_v1.pt --track 0 --slot 0 --temperature 0.95
+uv run generate --checkpoint models/acid_v1.pt --track 0 --slot 0 --temperature 0.95
 # respond to track 2/slot 0, writing the answer to track 0/slot 1:
-uv run osc-genai-generate --checkpoint models/acid_v1.pt \
+uv run generate --checkpoint models/acid_v1.pt \
   --context-track 2 --context-slot 0 --track 0 --slot 1
 ```
 
@@ -132,9 +132,9 @@ These run over **virtual MIDI ports** (not OSC — that's for clip/LOM control, 
 note streams):
 
 ```bash
-uv run osc-genai-play --checkpoint models/acid_v1.pt   # one-way: model plays continuously
-uv run osc-genai-duet --checkpoint models/acid_v1.pt   # model plays *with* you
-uv run osc-genai-duet --checkpoint models/acid_v1.pt --link   # ride Ableton Link tempo/transport
+uv run play --checkpoint models/acid_v1.pt   # one-way: model plays continuously
+uv run duet --checkpoint models/acid_v1.pt   # model plays *with* you
+uv run duet --checkpoint models/acid_v1.pt --link   # ride Ableton Link tempo/transport
 ```
 
 Route in Ableton: enable **`osc-genai out`** as a synth track's *MIDI From*, and for the duet
@@ -155,7 +155,7 @@ Trigger it two ways while the duet runs:
   TouchOSC), so a controller/footswitch can capture hands-free.
 
 ```bash
-uv run osc-genai-duet --checkpoint models/bass2drums.pt --snapshot-bars 4
+uv run duet --checkpoint models/bass2drums.pt --snapshot-bars 4
 # flags: --snapshot-dir --snapshot-bars --snapshot-human-inst --snapshot-machine-inst
 #        --snapshot-artist --snapshot-key --snapshot-osc-port --snapshot-osc-addr --no-snapshots
 ```
@@ -164,16 +164,16 @@ Snapshot length should match your training chunk size (`--snapshot-bars`, defaul
 
 ### Record a full session
 
-`osc-genai-record` captures the human and machine streams of a session to a paired JSON file
+`record` captures the human and machine streams of a session to a paired JSON file
 (both parts on a shared timeline) for offline paired training.
 
 ### Mock the duet locally (no controller)
 
-`osc-genai-fake-human` loops a MIDI line into the duet's input:
+`fake-human` loops a MIDI line into the duet's input:
 
 ```bash
-uv run osc-genai-duet --checkpoint models/acid_v1.pt   # terminal 1: creates ports, listens
-uv run osc-genai-fake-human --from-data data/MIDI      # terminal 2: loops one of your clips in
+uv run duet --checkpoint models/acid_v1.pt   # terminal 1: creates ports, listens
+uv run fake-human --from-data data/MIDI      # terminal 2: loops one of your clips in
 ```
 
 Route `osc-genai out` to a synth to hear the response (`--midi FILE`, a built-in acid pattern
