@@ -4,14 +4,14 @@ from __future__ import annotations
 
 import torch
 
-from osc_genai.core.event import SELF, notes_to_events
-from osc_genai.core.note import Note
-from osc_genai.core.vocab import EventCodec, VocabConfig
-from osc_genai.data.midi import transpose
-from osc_genai.data.pairs import interleave, interleave_pairs
-from osc_genai.inference import generate_phrase
-from osc_genai.model.factored import FactoredEventModel, ModelConfig
-from osc_genai.training.train import TrainConfig, train, train_conditional
+from midisommar.core.event import SELF, notes_to_events
+from midisommar.core.note import Note
+from midisommar.core.vocab import EventCodec, VocabConfig
+from midisommar.data.midi import transpose
+from midisommar.data.pairs import interleave, interleave_pairs
+from midisommar.inference import generate_phrase
+from midisommar.model.factored import FactoredEventModel, ModelConfig
+from midisommar.training.train import TrainConfig, train, train_conditional
 
 
 def test_conditional_learns_a_complement():

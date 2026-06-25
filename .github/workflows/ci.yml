@@ -35,6 +35,12 @@ jobs:
           enable-cache: true
           python-version: ${{ matrix.python-version }}
 
+      # PySide6's offscreen platform still dlopen's the GL stack; ubuntu-latest is headless
+      # and ships without libEGL, so the Qt smoke tests error on import without this.
+      - name: Install Qt system libraries (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libegl1
+
       - name: Install dependencies
         run: uv sync --all-extras --dev
 

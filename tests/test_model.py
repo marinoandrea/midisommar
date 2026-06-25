@@ -4,9 +4,9 @@ from __future__ import annotations
 
 import torch
 
-from osc_genai.core.event import Event
-from osc_genai.core.vocab import EventCodec, VocabConfig
-from osc_genai.model.factored import FactoredEventModel, ModelConfig
+from midisommar.core.event import Event
+from midisommar.core.vocab import EventCodec, VocabConfig
+from midisommar.model.factored import FactoredEventModel, ModelConfig
 
 
 def make_model() -> FactoredEventModel:
@@ -123,7 +123,7 @@ def test_phase_is_dt_cumulative_mod_bar():
 
 def test_sample_next_force_pins_a_field():
     """force={source_field: SELF} must always emit that source, whatever the model would sample."""
-    from osc_genai.core.event import SELF
+    from midisommar.core.event import SELF
 
     model = make_model()
     source_field = len(model.vocab.field_sizes) - 1

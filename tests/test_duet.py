@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import mido
 
-from osc_genai.realtime.duet import HumanStream
+from midisommar.realtime.duet import HumanStream
 
 
 class FakeClock:

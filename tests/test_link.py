@@ -1,4 +1,4 @@
-"""Tests for the shared beat clock (osc_genai.realtime.clock).
+"""Tests for the shared beat clock (midisommar.realtime.clock).
 
 WallClock is exercised directly; LinkClock construction is only checked when aalink is installed
 (it's an optional extra and needs an Ableton Link runtime), so these tests stay native-build-free.
@@ -10,7 +10,7 @@ import importlib.util
 
 import pytest
 
-from osc_genai.realtime.clock import LinkClock, WallClock, make_clock
+from midisommar.realtime.clock import LinkClock, WallClock, make_clock
 
 _HAS_AALINK = importlib.util.find_spec("aalink") is not None
 

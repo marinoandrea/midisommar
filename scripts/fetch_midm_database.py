@@ -42,7 +42,7 @@ ARTIST_PAGES = {
     "Autechre.html": "Autechre",
     "BOC.html": "Boards of Canada",
 }
-USER_AGENT = "osc-genai-fetch/1.0 (+midm-database mirror)"
+USER_AGENT = "midisommar-fetch/1.0 (+midm-database mirror)"
 
 # Instrument classification by track name. Ordered; first keyword hit wins.
 # (GM program data on this site is unreliable -- every track defaults to Piano --

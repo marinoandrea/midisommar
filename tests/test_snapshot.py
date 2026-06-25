@@ -6,11 +6,11 @@ import threading
 
 from pythonosc.udp_client import SimpleUDPClient
 
-from osc_genai.core.note import Note
-from osc_genai.data.midi import load_midi_file
-from osc_genai.data.pairs import build_aligned_pairs
-from osc_genai.data.snapshot import save_snapshot
-from osc_genai.osc.listen import OSCTrigger
+from midisommar.core.note import Note
+from midisommar.data.midi import load_midi_file
+from midisommar.data.pairs import build_aligned_pairs
+from midisommar.data.snapshot import save_snapshot
+from midisommar.osc.listen import OSCTrigger
 
 BPB = 4.0  # beats per bar
 BARS = 4

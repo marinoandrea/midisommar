@@ -1,6 +1,6 @@
 """The declarative command registry: parser parity, value round-tripping, and pyproject coupling.
 
-These guard the single source of truth in :mod:`osc_genai.cli_spec` that both the CLI parsers and
+These guard the single source of truth in :mod:`midisommar.cli_spec` that both the CLI parsers and
 the desktop control center consume. If a command's flags drift from its registry entry, or the
 registry stops matching the installed console scripts, these fail.
 """
@@ -11,7 +11,7 @@ from pathlib import Path
 
 import pytest
 
-from osc_genai.cli_spec import REGISTRY, build_parser, defaults, values_to_argv
+from midisommar.cli_spec import REGISTRY, build_parser, defaults, values_to_argv
 
 COMMANDS_WITH_FLAGS = [name for name, cmd in REGISTRY.items() if cmd.params]
 

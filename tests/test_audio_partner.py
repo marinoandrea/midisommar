@@ -9,10 +9,10 @@ from __future__ import annotations
 
 import numpy as np
 
-from osc_genai.audio.segment import NoteSegmenter
-from osc_genai.audio.stream import PitchTracker
-from osc_genai.audio.yin import Yin
-from osc_genai.realtime.partner import AudioPartnerInput, HumanStream
+from midisommar.audio.segment import NoteSegmenter
+from midisommar.audio.stream import PitchTracker
+from midisommar.audio.yin import Yin
+from midisommar.realtime.partner import AudioPartnerInput, HumanStream
 
 SR = 44100
 FRAME = 2048

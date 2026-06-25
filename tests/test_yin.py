@@ -5,7 +5,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from osc_genai.audio.yin import Yin
+from midisommar.audio.yin import Yin
 
 SR = 44100
 FRAME = 2048

@@ -13,7 +13,7 @@ import pytest
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 pytest.importorskip("PySide6", reason="gui extra not installed")
 
-from osc_genai.cli_spec import REGISTRY  # noqa: E402
+from midisommar.cli_spec import REGISTRY  # noqa: E402
 
 
 @pytest.fixture(scope="module")
@@ -24,7 +24,7 @@ def qt_app():
 
 
 def test_form_values_round_trip(qt_app):
-    from osc_genai.gui.forms import CommandForm
+    from midisommar.gui.forms import CommandForm
 
     form = CommandForm(REGISTRY["duet"])
     form.set_values(
@@ -38,7 +38,7 @@ def test_form_values_round_trip(qt_app):
 
 
 def test_form_missing_required(qt_app):
-    from osc_genai.gui.forms import CommandForm
+    from midisommar.gui.forms import CommandForm
 
     form = CommandForm(
         REGISTRY["duet"]
@@ -47,7 +47,7 @@ def test_form_missing_required(qt_app):
 
 
 def test_main_window_lists_every_command(qt_app):
-    from osc_genai.gui.app import MainWindow
+    from midisommar.gui.app import MainWindow
 
     window = MainWindow()
     assert window.stack.count() == len(REGISTRY)

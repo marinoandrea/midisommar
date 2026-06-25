@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from osc_genai.core.note import Note
-from osc_genai.data.drums import infer_drum_map, normalize_drums, regularize_drums
+from midisommar.core.note import Note
+from midisommar.data.drums import infer_drum_map, normalize_drums, regularize_drums
 
 
 def _kit_clip():
@@ -55,7 +55,7 @@ def test_regularize_dedupes_collapsed_hits():
 
 
 def test_is_kit_distinguishes_kits_from_stems():
-    from osc_genai.data.drums import is_kit
+    from midisommar.data.drums import is_kit
 
     kit = [Note(36, 0, 0.25, 100), Note(38, 1, 0.25, 100), Note(42, 0, 0.25, 80)]
     stem = [Note(48, float(b), 0.25, 100) for b in range(8)]  # one distinct note

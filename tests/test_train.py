@@ -4,10 +4,16 @@ from __future__ import annotations
 
 import torch
 
-from osc_genai.core.event import Event
-from osc_genai.core.vocab import EventCodec, VocabConfig
-from osc_genai.model.factored import FactoredEventModel, ModelConfig
-from osc_genai.training.train import TrainConfig, collate, load_model, save_model, train
+from midisommar.core.event import Event
+from midisommar.core.vocab import EventCodec, VocabConfig
+from midisommar.model.factored import FactoredEventModel, ModelConfig
+from midisommar.training.train import (
+    TrainConfig,
+    collate,
+    load_model,
+    save_model,
+    train,
+)
 
 # velocity 100 is a 16-bin centre, so it round-trips exactly through the codec.
 PATTERN = [
@@ -30,7 +36,7 @@ def test_collate_pads_and_masks():
 
 
 def test_pitch_class_weights_upweight_rare():
-    from osc_genai.training.train import pitch_class_weights
+    from midisommar.training.train import pitch_class_weights
 
     codec = EventCodec(VocabConfig())
     seq = codec.encode_sequence(

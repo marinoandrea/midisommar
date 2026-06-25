@@ -2,7 +2,7 @@
 
 Listens like AbletonOSC (default UDP 11000 for commands, replies on 11001), logs every message it
 receives, and answers the ``get`` queries our client makes. Run it in one terminal, then
-``uv run osc-genai`` in another to exercise the full send + blocking-receive path::
+``uv run midisommar`` in another to exercise the full send + blocking-receive path::
 
     uv run python scripts/mock_ableton.py
 

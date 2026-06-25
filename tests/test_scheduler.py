@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from osc_genai.realtime.scheduler import AnticipatoryBuffer, Scheduled
+from midisommar.realtime.scheduler import AnticipatoryBuffer, Scheduled
 
 
 def s(onset: float, pitch: int = 60, dur: float = 1.0) -> Scheduled:

@@ -4,10 +4,10 @@ from __future__ import annotations
 
 import torch
 
-from osc_genai.core.device import resolve_device
-from osc_genai.core.vocab import VocabConfig
-from osc_genai.model.checkpoint import load_model, save_model
-from osc_genai.model.factored import FactoredEventModel, ModelConfig
+from midisommar.core.device import resolve_device
+from midisommar.core.vocab import VocabConfig
+from midisommar.model.checkpoint import load_model, save_model
+from midisommar.model.factored import FactoredEventModel, ModelConfig
 
 
 def test_explicit_spec_is_honoured():

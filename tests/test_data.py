@@ -5,8 +5,8 @@ from __future__ import annotations
 import mido
 import numpy as np
 
-from osc_genai.core.note import Note
-from osc_genai.data.midi import (
+from midisommar.core.note import Note
+from midisommar.data.midi import (
     augment,
     jitter_velocity,
     load_midi_file,
@@ -68,7 +68,7 @@ def test_save_load_sequences_roundtrip(tmp_path):
 
 
 def test_combine_parts_assigns_channels_and_orders():
-    from osc_genai.data.midi import combine_parts
+    from midisommar.data.midi import combine_parts
 
     bass = [Note(40, 0.0, 1.0, 100), Note(43, 1.0, 1.0, 100)]
     drums = [Note(36, 0.0, 0.25, 110), Note(42, 0.5, 0.25, 90)]
@@ -84,7 +84,7 @@ def test_combine_parts_assigns_channels_and_orders():
 
 
 def test_cross_pairs_counts_and_is_deterministic():
-    from osc_genai.data.midi import cross_pairs
+    from midisommar.data.midi import cross_pairs
 
     ctx = [[Note(60, 0, 1, 100)], [Note(62, 0, 1, 100)]]
     tgt = [[Note(36, 0, 0.5, 100)], [Note(38, 0, 0.5, 100)], [Note(42, 0, 0.5, 100)]]

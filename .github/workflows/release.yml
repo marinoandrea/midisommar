@@ -38,7 +38,7 @@ jobs:
       - name: Write release notes
         run: |
           ver="${GITHUB_REF_NAME#v}"
-          wheel="osc_genai-${ver}-py3-none-any.whl"
+          wheel="midisommar-${ver}-py3-none-any.whl"
           url="https://github.com/${GITHUB_REPOSITORY}/releases/download/${GITHUB_REF_NAME}/${wheel}"
           cat > release-notes.md <<EOF
           ## Install
@@ -46,7 +46,7 @@ jobs:
           First install \`uv\` (https://docs.astral.sh/uv/getting-started/installation/), then run:
 
           \`\`\`
-          uv tool install "osc-genai[link] @ ${url}"
+          uv tool install "midisommar[link] @ ${url}"
           \`\`\`
 
           This pulls all dependencies (\`torch\`, \`aalink\`, …) automatically and installs the

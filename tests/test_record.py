@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import mido
 
-from osc_genai.core.note import Note
-from osc_genai.data.record import StreamRecorder, load_session, save_session
+from midisommar.core.note import Note
+from midisommar.data.record import StreamRecorder, load_session, save_session
 
 
 def _on(pitch, vel=100):

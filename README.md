@@ -1,7 +1,7 @@
-# osc-genai
+# midisommar
 
-[![CI](https://github.com/marinoandrea/osc-genai/actions/workflows/ci.yml/badge.svg)](https://github.com/marinoandrea/osc-genai/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/marinoandrea/osc-genai/branch/main/graph/badge.svg)](https://codecov.io/gh/marinoandrea/osc-genai)
+[![CI](https://github.com/marinoandrea/midisommar/actions/workflows/ci.yml/badge.svg)](https://github.com/marinoandrea/midisommar/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/marinoandrea/midisommar/branch/main/graph/badge.svg)](https://codecov.io/gh/marinoandrea/midisommar)
 [![Python](https://img.shields.io/badge/python-%3E%3D3.10-blue)](https://www.python.org/downloads/)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![Checked with ty](https://img.shields.io/badge/type%20checked-ty-261230.svg)](https://github.com/astral-sh/ty)
@@ -32,7 +32,7 @@ follows rather than jointly predicts you. Closing that gap is what the M4 paired
 
 ## How it fits together
 
-The code is organised into layered packages under `src/osc_genai/`:
+The code is organised into layered packages under `src/midisommar/`:
 
 ```
 core/      note + event representation, vocab/codec (Note <-> factored Event <-> model indices)
@@ -55,7 +55,7 @@ installed, one command pulls everything (including `torch` and the native `aalin
 deps) and installs the console commands (`duet`, `generate`, `train`, …):
 
 ```bash
-uv tool install "osc-genai[link] @ https://github.com/marinoandrea/osc-genai/releases/latest/download/osc_genai-0.1.0-py3-none-any.whl"
+uv tool install "midisommar[link] @ https://github.com/marinoandrea/midisommar/releases/latest/download/midisommar-0.1.0-py3-none-any.whl"
 ```
 
 Drop `[link]` to skip Ableton Link support. (You still need Ableton Live + AbletonOSC and the
@@ -160,8 +160,8 @@ uv run duet --checkpoint models/acid_v1.pt   # model plays *with* you
 uv run duet --checkpoint models/acid_v1.pt --link   # ride Ableton Link tempo/transport
 ```
 
-Route in Ableton: enable **`osc-genai out`** as a synth track's *MIDI From*, and for the duet
-**`osc-genai in`** as your controller's *MIDI To*. The macOS **IAC Driver** works too. Tune the
+Route in Ableton: enable **`midisommar out`** as a synth track's *MIDI From*, and for the duet
+**`midisommar in`** as your controller's *MIDI To*. The macOS **IAC Driver** works too. Tune the
 anticipation with `--lookahead`, `--commit-horizon`, `--chunk-events`.
 
 ### Snapshot save — keep the last N bars as training data
@@ -237,7 +237,7 @@ uv run duet --checkpoint models/acid_v1.pt   # terminal 1: creates ports, listen
 uv run fake-human --from-data data/MIDI      # terminal 2: loops one of your clips in
 ```
 
-Route `osc-genai out` to a synth to hear the response (`--midi FILE`, a built-in acid pattern
+Route `midisommar out` to a synth to hear the response (`--midi FILE`, a built-in acid pattern
 when no data is given, and `--bpm` are also available).
 
 ## Tests

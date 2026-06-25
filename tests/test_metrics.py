@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from osc_genai.training.metrics import (
+from midisommar.training.metrics import (
     distinct_n,
     histogram_overlap,
     longest_copied_run,

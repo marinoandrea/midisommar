@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from osc_genai.core.event import Event
-from osc_genai.core.vocab import EventCodec, VocabConfig
+from midisommar.core.event import Event
+from midisommar.core.vocab import EventCodec, VocabConfig
 
 
 def test_roundtrip_with_bin_centre_velocity_is_exact():

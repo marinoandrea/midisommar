@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from osc_genai.core.event import PARTNER, SELF, notes_to_events
-from osc_genai.core.note import Note
-from osc_genai.data.pairs import (
+from midisommar.core.event import PARTNER, SELF, notes_to_events
+from midisommar.core.note import Note
+from midisommar.data.pairs import (
     _save_notes_midi,
     augment_pairs,
     build_aligned_pairs,

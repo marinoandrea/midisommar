@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from osc_genai.audio.segment import NoteSegmenter, hz_to_midi
+from midisommar.audio.segment import NoteSegmenter, hz_to_midi
 
 
 def _midi_to_hz(pitch: int) -> float:

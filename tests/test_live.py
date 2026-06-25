@@ -12,7 +12,7 @@ import time
 import mido
 import pytest
 
-from osc_genai.realtime.live import DuetEngine, IntervalHarmonizer, NoteEvent
+from midisommar.realtime.live import DuetEngine, IntervalHarmonizer, NoteEvent
 
 # -- pure event conversion --------------------------------------------------------------------
 
@@ -83,7 +83,7 @@ def test_engine_handle_delegates_to_responder():
 
 def _can_open_virtual() -> bool:
     try:
-        port = mido.open_output("osc-genai-cap-check", virtual=True)
+        port = mido.open_output("midisommar-cap-check", virtual=True)
         port.close()
         return True
     except Exception:
@@ -93,8 +93,8 @@ def _can_open_virtual() -> bool:
 def test_virtual_ports_open_and_close():
     if not _can_open_virtual():
         pytest.skip("host cannot open virtual MIDI ports")
-    inp = mido.open_input("osc-genai-test-in", virtual=True)
-    out = mido.open_output("osc-genai-test-out", virtual=True)
+    inp = mido.open_input("midisommar-test-in", virtual=True)
+    out = mido.open_output("midisommar-test-out", virtual=True)
     inp.close()
     out.close()
 
@@ -102,10 +102,10 @@ def test_virtual_ports_open_and_close():
 def test_virtual_loopback_carries_a_note():
     if not _can_open_virtual():
         pytest.skip("host cannot open virtual MIDI ports")
-    out = mido.open_output("osc-genai-loop", virtual=True)
+    out = mido.open_output("midisommar-loop", virtual=True)
     try:
         time.sleep(0.1)
-        names = [n for n in mido.get_input_names() if "osc-genai-loop" in n]
+        names = [n for n in mido.get_input_names() if "midisommar-loop" in n]
         if not names:
             pytest.skip(
                 "virtual output is not routable to an input in-process on this host"

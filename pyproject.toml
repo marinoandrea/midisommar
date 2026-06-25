@@ -1,5 +1,5 @@
 [project]
-name = "osc-genai"
+name = "midisommar"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -27,20 +27,20 @@ link = ["aalink>=0.2.2"]
 gui = ["PySide6>=6.7", "pyqtgraph>=0.13"]
 
 [project.scripts]
-demo = "osc_genai:main"
-control-center = "osc_genai.gui.app:main"
-live = "osc_genai.realtime.live:main"
-generate = "osc_genai.inference:main"
-train = "osc_genai.training.train:main"
-train-conditional = "osc_genai.training.train:conditional_main"
-train-paired = "osc_genai.training.train:paired_main"
-build-pairs = "osc_genai.data.pairs:main"
-play = "osc_genai.realtime.play:main"
-duet = "osc_genai.realtime.duet:main"
-fake-human = "osc_genai.realtime.fake_human:main"
-record = "osc_genai.data.record:main"
-audio-devices = "osc_genai.audio.capture:main"
-audio-track = "osc_genai.audio.track:main"
+demo = "midisommar:main"
+control-center = "midisommar.gui.app:main"
+live = "midisommar.realtime.live:main"
+generate = "midisommar.inference:main"
+train = "midisommar.training.train:main"
+train-conditional = "midisommar.training.train:conditional_main"
+train-paired = "midisommar.training.train:paired_main"
+build-pairs = "midisommar.data.pairs:main"
+play = "midisommar.realtime.play:main"
+duet = "midisommar.realtime.duet:main"
+fake-human = "midisommar.realtime.fake_human:main"
+record = "midisommar.data.record:main"
+audio-devices = "midisommar.audio.capture:main"
+audio-track = "midisommar.audio.track:main"
 
 [build-system]
 requires = ["uv_build>=0.8.15,<0.9.0"]
@@ -55,7 +55,7 @@ dev = [
 ]
 
 [tool.coverage.run]
-source = ["src/osc_genai"]
+source = ["src/midisommar"]
 branch = true
 
 [tool.ruff]

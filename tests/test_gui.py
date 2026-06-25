@@ -8,9 +8,9 @@ from __future__ import annotations
 
 import sys
 
-from osc_genai.cli_spec import REGISTRY, defaults
-from osc_genai.gui import presets
-from osc_genai.gui.invoke import build_invocation
+from midisommar.cli_spec import REGISTRY, defaults
+from midisommar.gui import presets
+from midisommar.gui.invoke import build_invocation
 
 # -- Qt-free: invocation building -------------------------------------------------------------
 
@@ -21,7 +21,7 @@ def test_build_invocation_targets_entry_and_passes_flags():
     program, args = build_invocation("train", values)
     assert program == sys.executable
     assert args[0] == "-c"
-    assert "from osc_genai.training.train import main" in args[1]
+    assert "from midisommar.training.train import main" in args[1]
     # the flag values follow the -c <code> preamble
     tail = args[2:]
     assert "--data-dir" in tail and "/tmp/midi" in tail
