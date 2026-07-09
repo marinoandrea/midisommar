@@ -21,7 +21,7 @@ dependencies = [
 [project.optional-dependencies]
 # Ableton Link sync for the realtime commands (--link). Kept optional so the base install
 # and tests don't pull in the native aalink build. Install with: uv sync --extra link
-link = ["aalink>=0.2.2"]
+link = ["aalink>=0.2.3"]
 # Desktop control center (the `control-center` command). Heavy (Qt); kept optional so the base
 # install, CI, and tests stay headless. Install with: uv sync --extra gui
 gui = ["PySide6>=6.7", "pyqtgraph>=0.13"]
